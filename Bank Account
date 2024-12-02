@@ -1,0 +1,38 @@
+class BankAccount:
+    def __init__(self, account_holder, balance=0):
+        self.account_holder = account_holder
+        self.balance = balance
+
+    def deposit(self, amount):
+        if amount >= 10:
+            self.balance += amount
+            print(f"${amount} has been deposited! {self.account_holder}'s new balance is ${self.balance}")
+
+    def withdrawal(self, amount):
+        if amount > 0 and amount <= self.balance:
+            self.balance -= amount
+            print(f"${amount} has been withdrawn! {self.account_holder}'s new balance is ${self.balance}")
+
+# User accounts dictionary
+user_accounts = {
+    "alice": {"pin": 1000},
+    "bob": {"pin": 1001},
+    "john": {"pin": 1002},
+    "sam": {"pin": 1003}
+}
+
+# Authentication loop
+while True:
+    user_name = input("Type your username:\n")
+    if user_name not in user_accounts:
+        print("Username not found! Try again.")
+        continue
+
+    pin_code = int(input("Type your pin code:\n"))
+    if pin_code != user_accounts[user_name]["pin"]:
+        print("Pin code not found! Try again.")
+        continue
+
+    print(f"{user_name.capitalize()}, you have successfully logged in!")
+    user_bank_account = BankAccount(user_name)
+    break  # Exit the loop after successful login
