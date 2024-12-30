@@ -13,12 +13,12 @@ class BankAccount:
             self.balance -= amount
             print(f"${amount} has been withdrawn! {self.account_holder}'s new balance is ${self.balance}")
 
-# User accounts dictionary
+# User accounts dictionary with initial balances
 user_accounts = {
-    "alice": {"pin": 1000},
-    "bob": {"pin": 1001},
-    "john": {"pin": 1002},
-    "sam": {"pin": 1003}
+    "alice": {"pin": 1000, "balance": 100000},
+    "bob": {"pin": 1001, "balance": 88888888},
+    "john": {"pin": 1002, "balance": 80000},
+    "sam": {"pin": 1003, "balance": 40000}
 }
 
 # Authentication loop
@@ -34,5 +34,23 @@ while True:
         continue
 
     print(f"{user_name.capitalize()}, you have successfully logged in!")
-    user_bank_account = BankAccount(user_name)
+    user_data = user_accounts[user_name]
+    user_bank_account = BankAccount(user_name, user_data["balance"])
     break  # Exit the loop after successful login
+
+# Example transactions
+while True:
+    action = input("Would you like to deposit or withdraw money? Type 'deposit' or 'withdraw':\n").strip().lower()
+    if action not in ["deposit", "withdraw"]:
+        print("Invalid action. Please type 'deposit' or 'withdraw'.")
+        continue
+
+    amount = float(input(f"How much would you like to {action}?\n"))
+    if action == "deposit":
+        user_bank_account.deposit(amount)
+    elif action == "withdraw":
+        user_bank_account.withdrawal(amount)
+
+    another_action = input("Would you like to perform another transaction? (yes/no):\n").strip().lower()
+    if another_action != 'yes':
+        break
